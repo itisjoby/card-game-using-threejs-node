@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My First Node App</title>
+    <link
+      rel="stylesheet"
+      href="../third_party/bootstrap.min.css">
+    <script
+      src="../third_party/jquery-3.4.1.js"
+      ></script>
+    <script
+      src="../third_party/popper.min.js"
+      ></script>
+    <script
+      src="../third_party/bootstrap.min.js"
+      ></script>
+    
+    <script src="/socket.io/socket.io.js"></script>
+    
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      body {
+        margin: 0;
+      }
+      canvas {
+        width: 100%;
+        height: 100%;
+      }
+    
+
+#slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 5px;
+  border-radius: 5px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+#slider:hover {
+  opacity: 1;
+}
+
+#slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 50px;
+  height: 24px;
+  border: 0;
+  background: url('../assets/raw/button_slider_xxxl.png');
+  background-repeat: no-repeat;
+   background-size: 50px 40px;
+  cursor: pointer;
+}
+
+#slider::-moz-range-thumb {
+  width: 23px;
+  height: 24px;
+  border: 0;
+  background: url('../assets/raw/button_slider_xxxl.png');
+  cursor: pointer;
+}
+
+.cancel_slider{
+    background:url(../assets/raw/button_cancel_m.png);
+background-repeat: no-repeat;
+width:40px;
+height:40px;
+border: 0;
+vertical-align: -20px;  
+}
+.confirm_slider{
+    background:url(../assets/raw/button_ok_m.png);
+background-repeat: no-repeat;
+width:40px;
+height:40px;
+border: 0;
+vertical-align: -20px;  
+}
+.amount_slider{
+    position: absolute;
+    display: block;
+    z-index: 99;
+    left: 38%;
+    top: 80%;
+}
+.cancel_span,.buy_in_text,.range_picker,.confirm_span{
+    display: inline-block;
+}
+
+
+.buy_in_text{
+    color:white;
+    font-weight: bold;
+    
+}
+.buy_in_yellow_text{
+    color:#ffa700;
+}
+
+
+.room_menu_btn{
+    position:absolute;
+    background:url(../assets/raw/btn_menu_on.png);
+background-repeat: no-repeat;
+width:60px;
+height:40px;
+border: 0;
+right:20px;
+vertical-align: -20px;  
+}
+.popover{
+    padding:10px;
+    
+    background-color:grey;
+}
+ ul li {
+     color:white;
+        list-style-type:none;
+        width:100%;
+            padding:0px;
+            border-style: solid;
+    border-radius: 8px;
+    border-color: dimgrey;
+    margin:8px;
+    text-align: center;
+    }
+    .room_menu_list{
+        margin:10px;
+        padding:0px;
+    }
+    .popover-body{
+        padding:0px;
+    }
+    .room_menu_list li span{
+        padding: 20px;
+            cursor: pointer;
+        
+    }
+    .room_menu_btn{
+        cursor: pointer;
+    }
+    .chat_btn{
+        position:absolute;
+    background:url(../assets/raw/chat_button.png);
+background-repeat: no-repeat;
+width:60px;
+height:40px;
+border: 0;
+left:20px;
+vertical-align: -20px;  
+    }
+    
+    
+    #tooltip {
+  position: fixed;
+  left: 0;
+  top: 0;
+  min-width: 100px;
+  text-align: center;
+  padding: 5px 12px;
+  font-family: monospace;
+  background: #a0c020;
+  display: none;
+  opacity: 0;
+  border: 1px solid black;
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
+  transition: opacity 0.25s linear;
+  border-radius: 3px;
+}
+    .game_screen_name {
+  position: fixed;
+  left: 0;
+  top: 0;
+  min-width: 70px;
+  height:20px;
+
+  text-align: center;
+  padding: 5px 12px;
+  font-family: monospace;
+  background: #a0c020;
+  display: none;
+  opacity: 0;
+  border: 1px solid black;
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
+  transition: opacity 0.25s linear;
+  border-radius: 3px;
+    padding:0px;
+}   
+    </style>
+  </head>
+  <body>
+      
+      <% let menu_btn_content=`<ul class="room_menu_list">
+                  <li>
+                      <span class="stand_up_btn">Stand up</span>
+                  </li>
+                  <li>
+                      <span class="back_to_lobby">Back to lobby</span>
+                  </li>
+                  <li>
+                       <span class="block_chat">Block chat</span>
+                  </li>
+                  <li>
+                      <span class="invite_friends">Invite friends</span>
+                  </li>
+                  <li>
+                      <span class="get_chips">Get chips</span>
+                  </li>
+                  <li>
+                      <span class="settings">Settings</span>
+                  </li>
+              </ul>`;%>
+              <div id="tooltip">123</div>
+              
+      <div class="room_menu">
+          <div tabindex="0" class="room_menu_btn" data-toggle="popover"  data-placement="left" data-html="true" data-content='<%=menu_btn_content%>'>
+          </div>
+      </div>
+      <div class="chat_btn">
+          
+      </div>
+      <div class="amount_slider " style="display:none;">
+            <span>  
+                <span class="cancel_span">
+                    <button class="cancel_slider" style=""></button>
+                </span>
+                <span class="buy_in_text">
+                    <span class="buy_in_yellow_text">Buy-IN</span><span class="buyin_amount"> $20</span>
+                </span>
+            </span>
+          <span class="range_picker">
+              <input type="range" min="0" max="10" value="0" step="0.1" id="slider" class=""  >
+          </span>
+          <span class="confirm_span">
+              <button class="confirm_slider"></button>
+          </span>
+      </div>
+    <script>
+        let current_table_id = <%-JSON.stringify(table_id); %>;
+        let current_seat_id='';
+      let result = <%-JSON.stringify(result); %>
+      let member_id = <%-JSON.stringify(member_id); %>;
+      let Mycard_one='';
+      let Mycard_two='';
+    </script>
+    <script src="../threejs/build/three.js"></script>
+    <script src="../threejs/threex.domevents.js"></script>
+    <script src="../third_party/textonscene/SpriteText.js"></script>
+    <script src="../js/common.js"></script>
+    <script src="../js/room.js"></script>
+       <script src="../js/socket_room.js"></script>
+  </body>
+</html>
+
+<div class="modal fade" id="profile_modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-4">
+            <img src="" class="image-responsive profile_img" />
+            <span class="profile_name"></span>
+          </div>
+          <div class="col-8">
+            <table class="table">
+              <tbody>
+                <tr>
+                  <td>
+                    Hands Played
+                  </td>
+                  <td>
+                    <span id="hands_played"></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Hands Won
+                  </td>
+                  <td>
+                    <span id="hands_won"></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Biggest Pot Won
+                  </td>
+                  <td>
+                    <span id="biggest_pot"></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Sit-N-Gos
+                  </td>
+                  <td>
+                    <span id="sitngo"></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Coins
+                  </td>
+                  <td>
+                    <span id="coins"></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Location
+                  </td>
+                  <td>
+                    <span id="location"></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Best Hand
+                  </td>
+                  <td>
+                    <span id="best_hand"></span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success">Add Friend</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+
+<div class="modal fade" id="chat_modal_div">
+<div class="modal-dialog" >
+
+        <div class="modal-content">
+            <div class="modal-header">
+                    
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span></button>
+
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12 chat_history">
+                            
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="modal-footer" >
+                    <div class="col-sm-12">
+                            <div class="form-group">
+                                
+                                <input type="text" name="input_msg" value=""  class="form-control input_msg" maxlength="250" required autocomplete="off"/>
+                                <button type="button" style="background-color:#13388a;color:white" class="send_message_btn">Send</button>
+                            </div>
+                        </div>
+                </div>
+            
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    </div>

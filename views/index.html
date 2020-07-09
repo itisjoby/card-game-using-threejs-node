@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My First Node App</title>
+     <link
+      rel="stylesheet"
+      href="../third_party/bootstrap.min.css">
+    <script
+      src="../third_party/jquery-3.4.1.js"
+      ></script>
+    <script
+      src="../third_party/popper.min.js"
+      ></script>
+    <script
+      src="../third_party/bootstrap.min.js"
+      ></script>
+    
+    <script src="/socket.io/socket.io.js"></script>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        #settings_modal .modal-content{
+            background:url(../assets/raw/login_bg.png);
+background-repeat: repeat;
+
+        }
+        .profile_name{
+            font-weight: bold;
+        }
+        .setings_button{
+            background:url(../assets/raw/setting.png);
+background-repeat: no-repeat;
+width:60px;
+height:40px;
+border: 0;
+        }
+        .chip_img{
+            background:url(../assets/raw/chips_st.png);
+background-repeat: no-repeat;
+background-size: 25px 25px;
+width:25px;
+height:25px;
+border: 0;
+vertical-align: -5px;
+        }
+        .friend_icon{
+            background:url(../assets/raw/friend.png);
+background-repeat: no-repeat;
+background-size: 15px 20px;
+width:15px;
+height:20px;
+border: 0;
+vertical-align: -5px;
+        }
+        .chip_counter,.chip_img{
+            display: inline-block;
+        }
+        .chip_counter{
+            width:80%;
+            text-align:center;
+        }
+       
+        .progress{
+            width:30%;
+                overflow:visible;
+        }
+        .friend_icon,.friend_text{
+            display: inline-block;
+        }
+        </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-8 dashboard_panel_dark">
+          <ul class="nav nav-tabs dashboard_panel">
+            <li class="active">
+              <a data-toggle="tab" href="#home">Friends Online </a>
+            </li>
+            <li>
+              <a data-toggle="tab" href="#menu1">Leader Board</a>
+            </li>
+          </ul>
+
+          <div class="tab-content">
+            <div id="home" class="tab-pane active">
+              <table class="table leaderboard_tbl">
+                <tbody>
+                  <tr>
+                    <td class="name_info">
+                      <img
+                        src="https://iv1.lisimg.com/image/12789921/469full.jpg"
+                        alt="Pineapple"
+                      />
+                      <div>
+                        ChipUp
+                      </div>
+                      <div>
+                        Lv:1
+                      </div>
+                      
+                    </td>
+                    <td class="">
+                      <div>
+                        View Table
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div id="menu1" class="tab-pane fade">
+              <table class="table leaderboard_tbl">
+                <tbody>
+                  <tr>
+                    <td class="name_info">
+                      <img
+                        src="https://iv1.lisimg.com/image/12789921/469full.jpg"
+                        alt="Pineapple"
+                      />
+                      <div>
+                        ChipUp
+                      </div>
+                      <div>
+                        Lv:1
+                      </div>
+                    </td>
+                    <td class="">
+                      <div>
+                        Status:
+                      </div>
+                      <div>
+                        Coins:
+                      </div>
+                    </td>
+                    <td class="coin_info">
+                      <div>
+                        offline
+                      </div>
+                      <div>
+                        5,666M
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="vertical-menu">
+            <a href="#" class="play_now_a active">Play Now</a>
+            <a href="/holdem_table" class="holdem_a">Holdem Table</a>
+            <a href="#" class="tournament_a">Tournament</a>
+            <a href="#" class="slots_a">Slots</a>
+            <a href="#" class="get_chips_a">Get Chips</a>
+          </div>
+        </div>
+      </div>
+      <div class="clear-fix"></div>
+      <div class="row">
+        <div class="col-12 menu_bar">
+          <div class="col-4 profile_data">
+            <img
+                src="../assets/raw/com_facebook_logo.png" 
+              alt="Pineapple"
+            />
+            <div class="profile_name">
+              <%= result[0]['player_first_name']+' '+result[0]['player_last_name'];%>
+            </div>
+            
+            <div class="profile_level" >
+              Lv.3
+            </div>
+            <div class="progress">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+          
+          </div>
+          <div class="col-4">
+            <div class="chip_img">
+             
+            </div>
+            <div class="chip_counter">
+              $
+              <%= result[0]['coins'];%>
+            </div>
+          </div>
+          <div class="col-3">
+              <div class="friend_icon"></div>
+            <div class="friend_text">
+              Friend
+            </div>
+          </div>
+          <div class="col-1">
+              <div class="setings_button"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="../js/common.js"></script>
+    <script src="../js/index.js"></script>
+  </body>
+</html>
+
+<div class="modal fade" id="settings_modal">
+<div class="modal-dialog" >
+
+        <div class="modal-content">
+            <div class="modal-header">
+                    Account
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span></button>
+
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12 chat_history">
+                            <table class='table'>
+                                <thead>
+                                    <tr>
+                                        <th class='logout'>
+                                            Logout
+                                            <div class='small_text'>
+                                                <%= result[0]['email'];%>
+                                            </div>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            Screen name
+                                            <div class='small_text'>
+                                               <%= result[0]['player_first_name']+' '+result[0]['player_last_name'];%>
+                                            </div>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            Password
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            Clear location
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            Clear gift
+                                        </th>
+                                    </tr>
+                                </thead>
+                            </table>  
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    </div>

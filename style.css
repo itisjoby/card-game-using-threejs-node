@@ -1,0 +1,108 @@
+body {
+  background-color: #13388a;
+  color: white;
+}
+td,th{
+    color:white;
+}
+.vertical-menu a {
+  display: block;
+  padding: 12px;
+  text-decoration: none;
+  border-radius: 5%;
+  margin: 5px;
+  text-align: center;
+  font-weight: bold;
+  color: white;
+}
+a.play_now_a {
+  background-color: #d80606;
+}
+a.holdem_a {
+  background-color: #171792;
+}
+a.tournament_a {
+  background-color: green;
+}
+a.slots_a {
+  background-color: #b30c75;
+}
+a.get_chips_a {
+  background-color: #800a6c;
+}
+.dashboard_panel li {
+  width: 50%;
+  padding: 10px;
+  text-align: center;
+}
+.dashboard_panel li.active {
+  background-color: #0a2050;
+  list-style-position: inside;
+  border-bottom: 1px solid;
+  border-radius: 12px;
+  border-bottom-color: red;
+}
+li a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+.dashboard_panel li.active a {
+  color: #03dafd;
+  text-decoration: none;
+  font-weight: bold;
+}
+.dashboard_panel_dark {
+  background-color: #06062b;
+}
+.leaderboard_tbl .name_info {
+  width: 60%;
+}
+.leaderboard_tbl .stats_info {
+  width: 20%;
+}
+.leaderboard_tbl .coin_info {
+  width: 20%;
+}
+.leaderboard_tbl img {
+  float: left;
+  width: 65px !important;
+  height: 55px !important;
+  object-fit: cover;
+  padding: 5px;
+}
+.menu_bar {
+  display: flex;
+  background-color: #0a2050;
+}
+.menu_bar img {
+  float: left;
+  width: 65px !important;
+  height: 55px !important;
+  object-fit: cover;
+  padding: 5px;
+}
+.container {
+  background-color: #06062b;
+}
+.table_list_menu li {
+  width: 25%;
+  text-align: center;
+}
+.table_list_menu li.active {
+  background-color: #2860da;
+  list-style-position: inside;
+  border-bottom: 1px solid;
+  border-radius: 12px;
+  border-bottom-color: red;
+}
+.table_list_menu li.active a {
+  color: #03dafd;
+  text-decoration: none;
+  font-weight: bold;
+}
+#profile_modal img.profile_img {
+  width: 50px;
+  height: 50px;
+  float: right;
+}

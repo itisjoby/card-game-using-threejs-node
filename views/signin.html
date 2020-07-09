@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My First Node App</title>
+    <link
+      rel="stylesheet"
+      href="../third_party/bootstrap.min.css">
+    <script
+      src="../third_party/jquery-3.4.1.js"
+      ></script>
+    <script
+      src="../third_party/popper.min.js"
+      ></script>
+    <script
+      src="../third_party/bootstrap.min.js"
+      ></script>
+      
+    <link rel="stylesheet" href="style.css" />
+    
+    <style>
+        .logo_name{
+          color:red;  
+        }
+        .logo_poker
+        {
+            color:white
+        }
+       
+        .signin_wrapper{
+            position: absolute;
+        min-height:300px;  
+            top: 25%;
+            width:100%;
+            padding-left:10%;
+        }
+        .log_theme{
+            font-size: 1.6em;
+            font-weight: bold;
+            padding:0px;
+        }
+        .logo_area,.login_area{
+            display:inline-block;
+        }
+        input[type='text'],input[type='password'],input[type='text']:focus,input[type='password']:focus{
+            background-color: #0e0e2f;
+            color:white;
+        }
+    </style>
+  </head>
+  <body>
+      
+        <div class="signin_wrapper ">
+                  <div class="logo_area" style='width:30%;vertical-align: text-top;'>
+                      
+                        <div class="log_theme logo_name">DINGAN</div>
+                        <div class="log_theme logo_poker">POKER</div>
+                        <span style='background-color:black'
+                        class="txt-rotate"
+                        data-period="2000"
+                        data-rotate='[ "Enter Email...", "Enter Password...", "Click Sign In" ]'>
+         
+                      </span>
+                       
+                  </div>
+                  <div class="login_area" style='width:60%'>
+                      <div class='container' style='width:100%'>
+<!--                          MAIN PAGE-->
+                          <div class='row main_menu_list' style='width:100%'>
+                              
+                              <div class='col-12'>
+                                  <div class='text-right' style='margin:10px'>
+                                      <button type='button' class='btn btn-primary sign_in' style='width:30%;background-color: #135dad'>Sign In</button>
+                                  </div>
+                                  <div class='text-right' style='margin:10px'>
+                                      <button type='button' class='btn btn-success sign_up' style='width:30%;background-color: #11bb11'>Sign Up</button>
+                                  </div>
+                                  <div class='text-right' style='margin:10px'>
+                                      <button type='button' class='btn btn-success' style='width:30%;background-color: #11bb11'>Play as guest</button>
+                                  </div>
+                              </div>
+                          </div>
+                          
+<!--                          REGISTER-->
+                          <div class='row mb-2 signup_div' style='display:none'>
+                              <form class="form-inline signup_form" action="/action_page.php" style='width:100%;margin: 20px 20px 0px 20px;' autocomplete='off'>
+                              <div class='col-12'>
+                                  <div class='form-group mb-4'>
+                                      <label class='mr-sm-2 ' style='width:30%'>
+                                          Email
+                                      </label>
+                                      <input type='text' class='form-control' name='email' value='' style='width:60%'/>
+                                  </div>
+                                  <div class='form-group mb-4'>
+                                      <label class='mr-sm-2 ' style='width:30%'>
+                                          Name
+                                      </label>
+                                      <input type='text' class='form-control' name='name' value='' style='width:60%'/>
+                                  </div>
+                                  <div class='form-group mb-4'>
+                                      <label class='mr-sm-2' style='width:30%'>
+                                          Password
+                                      </label>
+                                      <input type='password' class='form-control' name='password' value='' style='width:60%'/>
+                                  </div>
+                                  <div class='col-12 form-group mb-4'>
+                                      <div class='col-1'></div>
+                                        <div class='col-10'>
+                                            <button type='button' class='btn btn-primary mr-sm-2 sign_up_btn' style='width:45%;background-color: #135dad'>Sign Up</button>
+                                            <button type='button' class='btn btn-success back_to_main' style='width:45%;background-color: #11bb11'>Cancel</button>
+                                        </div>
+                                      <div class='col-1'></div>
+                                  </div>
+                              </div>
+                              </form>
+                          </div>
+<!--                          LOGIN-->
+                          <div class='row mb-2 sign_in_div' style='display:none'>
+                              <form class="form-inline login_form" action="/action_page.php" style='width:100%;margin: 20px 20px 0px 20px;' autocomplete='off'>
+                              <div class='col-12'>
+                                  <div class='form-group mb-4'>
+                                      <label class='mr-sm-2 ' style='width:30%'>
+                                          Email
+                                      </label>
+                                      <input type='text' class='form-control' name='email' value='' style='width:60%'/>
+                                  </div>
+                                  <div class='form-group mb-4'>
+                                      <label class='mr-sm-2' style='width:30%'>
+                                          Password
+                                      </label>
+                                      <input type='password' class='form-control' name='password' value='' style='width:60%'/>
+                                  </div>
+                                  <div class='col-12 form-group mb-4'>
+                                      <div class='col-1'></div>
+                                        <div class='col-10'>
+                                            <button type='button' class='btn btn-primary mr-sm-2 login_btn' style='width:45%;background-color: #135dad'>Sign In</button>
+                                            <button type='button' class='btn btn-success back_to_main' style='width:45%;background-color: #11bb11'>Cancel</button>
+                                        </div>
+                                      <div class='col-1'></div>
+                                  </div>
+                              </div>
+                              </form>
+                          </div>
+                      </div>
+                  </div>
+            <div class='fun_board' style='width:80%'>
+                 <canvas id='funboard' style='width:100%;height:250px'></canvas>
+            </div>
+            
+                  
+        </div>
+      <script src='../js/typefun.js'></script>
+      <script src='../js/signup.js'></script>
+<!--      <script src='../js/typeletters_onebyone.js'></script>-->
+      
+<script>
+    $(".sign_up").on('click',function(){
+        $(".main_menu_list").hide();
+        $(".signup_div").show();
+    });
+    $(".sign_in").on('click',function(){
+        $(".main_menu_list").hide();
+        $(".signup_div").hide();
+        $(".sign_in_div").show();
+    });
+    $(".back_to_main").on('click',function(){
+        $(".main_menu_list").show();
+        $(".sign_in_div").hide();
+        $(".signup_div").hide();
+    });
+</script>
+
+  </body>
+</html>
+

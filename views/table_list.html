@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My First Node App</title>
+     <link
+      rel="stylesheet"
+      href="../third_party/bootstrap.min.css">
+    <script
+      src="../third_party/jquery-3.4.1.js"
+      ></script>
+    <script
+      src="../third_party/popper.min.js"
+      ></script>
+    <script
+      src="../third_party/bootstrap.min.js"
+      ></script>
+    
+    <script src="/socket.io/socket.io.js"></script>
+    <link rel="stylesheet" href="../style.css" /> 
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-12 dashboard_panel_dark">
+          <ul class="nav nav-tabs table_list_menu">
+            <li class="<%= (active=='tiny')?'active':'';%>" table_type="tiny">
+              <a href="/holdem_table?type=tiny">Tiny </a>
+            </li>
+            <li class="<%= (active=='small')?'active':'';%>" table_type="small">
+              <a href="/holdem_table?type=small">Small</a>
+            </li>
+            <li
+              class="<%= (active=='medium')?'active':'';%>"
+              table_type="medium"
+            >
+              <a href="/holdem_table?type=medium">Medium</a>
+            </li>
+            <li class="<%= (active=='big')?'active':'';%>" table_type="big">
+              <a href="/holdem_table?type=big">Big</a>
+            </li>
+          </ul>
+
+          <div class="tab-content">
+            <div id="tiny" class="tab-pane <%= (active=='tiny')?'active':'';%>">
+              <table class="table list_tbl">
+                <thead>
+                  <tr>
+                    <th>
+                      ID
+                    </th>
+                    <th>
+                      Blind
+                    </th>
+                    <th>
+                      Min/Max
+                    </th>
+                    <th>
+                      Players
+                    </th>
+                    <th>
+                      Speed
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% if(Object.keys(result).length>0){ for(let index in result)
+                  { let value=result[index]; %>
+                  <tr>
+                    <td>
+                      <input
+                        type="hidden"
+                        name="table_id[]"
+                        class="table_id"
+                        value="<%=value['_id']; %>"
+                      />
+                      <%= value['name'];%>
+                    </td>
+                    <td>
+                      2/4
+                    </td>
+                    <td>
+                      <%= value['min_deal']+'/'+value['max_deal'];%>
+                    </td>
+                    <td>
+                      <%=
+                      value['occupied_seats_count']+'/'+(value['occupied_seats_count']+value['empty_seats_count']);%>
+                    </td>
+                    <td>
+                      <%= value['time_type'];%>
+                    </td>
+                  </tr>
+                  <% } }else{ %>
+                  <td colspan="5" class="text-center alert alert-danger">
+                    No Tables
+                  </td>
+                  <% }%>
+                </tbody>
+              </table>
+            </div>
+
+            <!--small tab begins-->
+            <div
+              id="small"
+              class="tab-pane <%= (active=='small')?'active':'';%>"
+            >
+              <table class="table list_tbl">
+                <thead>
+                  <tr>
+                    <th>
+                      ID
+                    </th>
+                    <th>
+                      Blind
+                    </th>
+                    <th>
+                      Min/Max
+                    </th>
+                    <th>
+                      Players
+                    </th>
+                    <th>
+                      Speed
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% if(Object.keys(result).length>0){ for(let index in result)
+                  { let value=result[index]; %>
+                  <tr>
+                    <td>
+                      <input
+                        type="hidden"
+                        name="table_id[]"
+                        class="table_id"
+                        value="<%=value['_id']; %>"
+                      />
+                      <%= value['name'];%>
+                    </td>
+                    <td>
+                      2/4
+                    </td>
+                    <td>
+                      <%= value['min_deal']+'/'+value['max_deal'];%>
+                    </td>
+                    <td>
+                      <%=
+                      value['occupied_seats_count']+'/'+(value['occupied_seats_count']+value['empty_seats_count']);%>
+                    </td>
+                    <td>
+                      <%= value['time_type'];%>
+                    </td>
+                  </tr>
+                  <% } }else{ %>
+                  <td colspan="5" class="text-center alert alert-danger">
+                    No Tables
+                  </td>
+                  <% }%>
+                </tbody>
+              </table>
+            </div>
+            <!--small tab ends-->
+
+            <!--medium tab begins-->
+            <div
+              id="medium"
+              class="tab-pane <%= (active=='medium')?'active':'';%>"
+            >
+              <table class="table list_tbl">
+                <thead>
+                  <tr>
+                    <th>
+                      ID
+                    </th>
+                    <th>
+                      Blind
+                    </th>
+                    <th>
+                      Min/Max
+                    </th>
+                    <th>
+                      Players
+                    </th>
+                    <th>
+                      Speed
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% if(Object.keys(result).length>0){ for(let index in result)
+                  { let value=result[index]; %>
+                  <tr>
+                    <td>
+                      <input
+                        type="hidden"
+                        name="table_id[]"
+                        class="table_id"
+                        value="<%=value['_id']; %>"
+                      />
+                      <%= value['name'];%>
+                    </td>
+                    <td>
+                      2/4
+                    </td>
+                    <td>
+                      <%= value['min_deal']+'/'+value['max_deal'];%>
+                    </td>
+                    <td>
+                      <%=
+                      value['occupied_seats_count']+'/'+(value['occupied_seats_count']+value['empty_seats_count']);%>
+                    </td>
+                    <td>
+                      <%= value['time_type'];%>
+                    </td>
+                  </tr>
+                  <% } }else{ %>
+                  <td colspan="5" class="text-center alert alert-danger">
+                    No Tables
+                  </td>
+                  <% }%>
+                </tbody>
+              </table>
+            </div>
+            <!--medium tab ends-->
+            <!--large tab begins-->
+            <div id="big" class="tab-pane <%= (active=='big')?'active':'';%>">
+              <table class="table list_tbl">
+                <thead>
+                  <tr>
+                    <th>
+                      ID
+                    </th>
+                    <th>
+                      Blind
+                    </th>
+                    <th>
+                      Min/Max
+                    </th>
+                    <th>
+                      Players
+                    </th>
+                    <th>
+                      Speed
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% if(Object.keys(result).length>0){ for(let index in result)
+                  { let value=result[index]; %>
+                  <tr>
+                    <td>
+                      <input
+                        type="hidden"
+                        name="table_id[]"
+                        class="table_id"
+                        value="<%=value['_id']; %>"
+                      />
+                      <%= value['name'];%>
+                    </td>
+                    <td>
+                      2/4
+                    </td>
+                    <td>
+                      <%= value['min_deal']+'/'+value['max_deal'];%>
+                    </td>
+                    <td>
+                      <%=
+                      value['occupied_seats_count']+'/'+(value['occupied_seats_count']+value['empty_seats_count']);%>
+                    </td>
+                    <td>
+                      <%= value['time_type'];%>
+                    </td>
+                  </tr>
+                  <% } }else{ %>
+                  <td colspan="5" class="text-center alert alert-danger">
+                    No Tables
+                  </td>
+                  <% }%>
+                </tbody>
+              </table>
+            </div>
+            <!--large tab ends-->
+          </div>
+        </div>
+      </div>
+      <div class="clear-fix"></div>
+      <div class="row">
+        <div class="col-12 menu_bar"><input type="checkbox" />Hide Full</div>
+      </div>
+    </div>
+    <script src="../js/common.js"></script>
+    <script src="../js/table_list.js"></script>
+  </body>
+</html>
